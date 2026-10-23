@@ -130,23 +130,6 @@ export const McpInspector: React.FC<McpInspectorProps> = ({
 
   return (
     <>
-      {/* Floating Toggle Button when Drawer is Closed */}
-      {!isOpen && (
-        <button
-          onClick={onToggle}
-          className="fixed right-0 top-24 z-40 flex items-center gap-2 px-3 py-2.5 rounded-l-2xl bg-cyan-600 hover:bg-cyan-500 text-white shadow-xl transition-transform hover:-translate-x-1 font-mono text-xs font-semibold"
-          title="Open MCP Protocol Inspector"
-        >
-          <Terminal className="w-4 h-4" />
-          <span>MCP Inspector</span>
-          {verifiedVersion && (
-            <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] border border-emerald-400/30">
-              {verifiedVersion}
-            </span>
-          )}
-        </button>
-      )}
-
       {/* Slide-out Drawer Panel */}
       <div
         className={`fixed inset-y-0 right-0 z-50 w-full sm:w-[480px] bg-slate-950/95 backdrop-blur-2xl border-l border-white/10 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${

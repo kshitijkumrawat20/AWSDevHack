@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import {
-  Sparkles,
+  Clock,
+  CloudSun,
+  Terminal,
   Volume2,
   VolumeX,
-  Clock,
-  Terminal,
-  Activity,
-  Shield,
-  Layers,
 } from 'lucide-react'
-import { VoiceOrb } from './components/VoiceOrb'
-import { TranscriptBar } from './components/TranscriptBar'
+import { AmbientHomeWidgets } from './components/AmbientHomeWidgets'
 import { RichMediaCanvas } from './components/RichMediaCanvas'
-import { McpInspector } from './components/McpInspector'
 import { DemoChips } from './components/DemoChips'
+import { TranscriptBar } from './components/TranscriptBar'
+import { ConversationalDialogue } from './components/ConversationalDialogue'
 import { RingTriggerButton } from './components/RingTriggerButton'
+import { McpInspector } from './components/McpInspector'
 import { useVoice } from './hooks/useVoice'
 import { sendChat, subscribeToEvents } from './api'
 import { UICard, MCPInspectorPayload } from './types'
@@ -23,14 +21,13 @@ export function App() {
   const [cards, setCards] = useState<UICard[]>([])
   const [lastUserSpeech, setLastUserSpeech] = useState<string>('')
   const [lastAssistantSpeech, setLastAssistantSpeech] = useState<string>(
-    'Hello! I am Alexa+ OmniPulse. I can manage your smart home, prepare for visiting guests, and recommend personalized wellness products.'
+    'Hello! I\'m Alexa+ OmniPulse. Parents visiting tomorrow — context is active.'
   )
   const [isLoading, setIsLoading] = useState(false)
   const [inspectorOpen, setInspectorOpen] = useState(false)
   const [inspectorLogs, setInspectorLogs] = useState<MCPInspectorPayload[]>([])
-  const [currentTime, setCurrentTime] = useState<string>('')
+  const [currentTime, setCurrentTime] = useState<string>('03:24 PM')
 
-  // Live clock for Echo Show 15 interface
   useEffect(() => {
     const updateTime = () => {
       const now = new Date()
@@ -43,27 +40,16 @@ export function App() {
     return () => clearInterval(timer)
   }, [])
 
-  // Execute chat orchestration
   const handleSendMessage = useCallback(
     async (messageText: string) => {
       if (!messageText || isLoading) return
-
       setIsLoading(true)
       setLastUserSpeech(messageText)
-
       try {
         const res = await sendChat(messageText, 'default')
-
         setLastAssistantSpeech(res.speech)
-        if (res.cards && res.cards.length > 0) {
-          // Prepend or replace cards for dynamic canvas experience
-          setCards(res.cards)
-        }
-
-        // Voice output via TTS
+        if (res.cards && res.cards.length > 0) setCards(res.cards)
         speak(res.speech)
-
-        // Log tool calls to MCP Inspector
         if (res.tool_calls && res.tool_calls.length > 0) {
           const timestamp = new Date().toLocaleTimeString()
           const newLogs: MCPInspectorPayload[] = res.tool_calls.map((tc) => ({
@@ -71,13 +57,13 @@ export function App() {
             direction: 'response',
             method: `tools/call: ${tc.name}`,
             payload: { tool: tc.name, arguments: tc.arguments, result: tc.result },
-            latencyMs: 15,
+            latencyMs: 16,
           }))
-          setInspectorLogs(newLogs)
+          setInspectorLogs((prev) => [...newLogs, ...prev].slice(0, 30))
         }
       } catch (err: any) {
         console.error('Chat orchestration error:', err)
-        const errMsg = 'Sorry, I encountered an error connecting to the backend.'
+        const errMsg = 'Connection error with the backend agent.'
         setLastAssistantSpeech(errMsg)
         speak(errMsg)
       } finally {
@@ -87,156 +73,143 @@ export function App() {
     [isLoading]
   )
 
-  // Voice Hook
-  const {
-    isListening,
-    isSpeaking,
-    ttsEnabled,
-    setTtsEnabled,
-    toggleListening,
-    speak,
-  } = useVoice({
-    onFinalTranscript: (text) => {
-      handleSendMessage(text)
-    },
+  const { isListening, isSpeaking, ttsEnabled, setTtsEnabled, toggleListening, speak } = useVoice({
+    onFinalTranscript: (text) => handleSendMessage(text),
   })
 
-  // Subscribe to proactive Ring doorbell alerts via Server-Sent Events (/events)
   useEffect(() => {
     const unsubscribe = subscribeToEvents((eventData) => {
-      console.log('SSE proactive Ring alert received:', eventData)
-      if (eventData.ring_alert_card) {
-        setCards((prev) => [eventData.ring_alert_card, ...prev])
-      }
+      if (eventData.ring_alert_card) setCards((prev) => [eventData.ring_alert_card, ...prev])
       if (eventData.speech) {
         setLastAssistantSpeech(eventData.speech)
         speak(eventData.speech)
       }
     })
-
-    return () => {
-      unsubscribe()
-    }
+    return () => unsubscribe()
   }, [speak])
 
-  // Handle 1-Click Buy button from product carousel
-  const handleBuyProduct = (productId: number, productName: string) => {
+  const handleBuyProduct = (productId: number, _productName: string) => {
     handleSendMessage(`checkout product ${productId}`)
   }
 
+  const handleRingEventTriggered = (res: any) => {
+    if (res.ring_alert_card) setCards((prev) => [res.ring_alert_card, ...prev])
+    if (res.speech) {
+      setLastAssistantSpeech(res.speech)
+      speak(res.speech)
+    }
+  }
+
   return (
-    <div className="min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto relative select-none">
-      {/* Top Navigation & Status Bar */}
-      <header className="glass-panel w-full rounded-2xl px-6 py-3.5 flex items-center justify-between mb-4 shadow-lg border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center shadow-md shadow-cyan-900/40 border border-white/20">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base font-extrabold tracking-tight text-slate-100 flex items-center gap-1.5">
-                <span>Alexa+</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400">
-                  OmniPulse
-                </span>
-              </h1>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
-                Echo Show 15 Simulator
-              </span>
+    <div className="h-screen w-screen overflow-hidden bg-[var(--surface-base)] flex items-center justify-center select-none">
+      {/* Inner display frame */}
+      <div
+        className="w-full h-full relative flex flex-col bg-cover bg-center"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=85')`,
+        }}
+      >
+        {/* Frosted overlay — single layer, consistent */}
+        <div className="absolute inset-0 bg-[var(--surface-base)]/80 backdrop-blur-2xl" />
+
+        {/* TOP STATUS BAR */}
+        <header className="relative z-20 flex items-center justify-between h-12 px-5 shrink-0">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+              <Clock className="w-4 h-4" style={{ color: 'var(--accent)' }} />
+              {currentTime}
             </div>
-            <p className="text-[11px] text-slate-400">
-              Autonomous Context-Aware Ambient Orchestrator | MCP 2025-11-25
-            </p>
-          </div>
-        </div>
-
-        {/* Right Status Controls */}
-        <div className="flex items-center gap-3">
-          {/* Live Clock */}
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/60 border border-white/5 text-xs font-mono text-slate-300">
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{currentTime || '12:00 PM'}</span>
+            <div className="w-px h-4 bg-[var(--glass-border)]" />
+            <div className="flex items-center gap-1.5 text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>
+              <CloudSun className="w-3.5 h-3.5" style={{ color: 'var(--warning)' }} />
+              72°F Seattle
+            </div>
           </div>
 
-          {/* Voice Output (TTS) Toggle */}
-          <button
-            onClick={() => setTtsEnabled(!ttsEnabled)}
-            className={`p-2 rounded-xl border text-xs font-medium flex items-center gap-1.5 transition-all ${
-              ttsEnabled
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20'
-                : 'bg-slate-800/50 border-white/10 text-slate-400 hover:text-slate-200'
-            }`}
-            title={ttsEnabled ? 'Voice output (TTS) ON' : 'Voice output (TTS) MUTED'}
-          >
-            {ttsEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-            <span className="hidden md:inline">{ttsEnabled ? 'TTS Audio' : 'Muted'}</span>
-          </button>
+          {/* Protocol badge */}
+          <div className="hidden sm:flex glass-chip items-center gap-2 px-3 py-1 rounded-full text-xs" style={{ color: 'var(--text-secondary)' }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--success)' }} />
+            MCP 2025-11-25 · Live
+          </div>
 
-          {/* Simulate Ring Doorbell Event */}
-          <RingTriggerButton
-            onEventTriggered={(res) => {
-              if (res.ring_alert_card) {
-                setCards((prev) => [res.ring_alert_card, ...prev])
-              }
-              if (res.speech) {
-                setLastAssistantSpeech(res.speech)
-                speak(res.speech)
-              }
-            }}
-          />
+          {/* Controls */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setTtsEnabled(!ttsEnabled)}
+              className="glass-chip p-2 rounded-full cursor-pointer"
+              title={ttsEnabled ? 'Mute voice' : 'Unmute voice'}
+              style={{ color: ttsEnabled ? 'var(--success)' : 'var(--text-muted)' }}
+            >
+              {ttsEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            </button>
+            <RingTriggerButton onEventTriggered={handleRingEventTriggered} />
+            <button
+              onClick={() => setInspectorOpen(true)}
+              className="glass-chip flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer"
+              style={{ color: 'var(--text-secondary)' }}
+              title="MCP Inspector"
+            >
+              <Terminal className="w-3.5 h-3.5" style={{ color: 'var(--accent)' }} />
+              <span className="hidden sm:inline">Inspector</span>
+              {inspectorLogs.length > 0 && (
+                <span
+                  className="w-4 h-4 rounded-full text-[10px] flex items-center justify-center font-bold"
+                  style={{ background: 'var(--accent-muted)', color: 'var(--accent)' }}
+                >
+                  {inspectorLogs.length}
+                </span>
+              )}
+            </button>
+          </div>
+        </header>
 
-          {/* MCP Inspector Toggle Button */}
-          <button
-            onClick={() => setInspectorOpen(!inspectorOpen)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold shadow-md transition-all active:scale-95"
-            title="Inspect Live MCP Protocol Streams"
-          >
-            <Terminal className="w-4 h-4" />
-            <span className="hidden sm:inline">MCP Inspector</span>
-          </button>
-        </div>
-      </header>
+        {/* CENTER STAGE */}
+        <main className="relative z-10 flex-1 min-h-0 flex flex-col justify-center items-center px-4 py-1 overflow-hidden">
+          {cards.length === 0 ? (
+            <AmbientHomeWidgets
+              currentTime={currentTime}
+              onRingEventTriggered={handleRingEventTriggered}
+              onCommandTrigger={handleSendMessage}
+            />
+          ) : (
+            <RichMediaCanvas
+              cards={cards}
+              onBuyProduct={handleBuyProduct}
+              onBackToHome={() => setCards([])}
+              lastAssistantSpeech={lastAssistantSpeech}
+              lastUserSpeech={lastUserSpeech}
+            />
+          )}
+        </main>
 
-      {/* Main Interactive Stage */}
-      <main className="flex-1 flex flex-col justify-start items-center relative z-10 w-full py-2">
-        {/* Animated Alexa+ Voice Orb */}
-        <VoiceOrb
-          isListening={isListening}
-          isSpeaking={isSpeaking}
-          onClick={toggleListening}
-        />
-
-        {/* Live Conversational Transcript Bar */}
-        <div className="w-full mt-3">
+        {/* BOTTOM DOCK */}
+        <footer className="relative z-20 w-full shrink-0 px-4 pb-4 pt-1 space-y-2">
+          {cards.length === 0 && (
+            <ConversationalDialogue
+              lastUserSpeech={lastUserSpeech}
+              lastAssistantSpeech={lastAssistantSpeech}
+              isLoading={isLoading}
+              isListening={isListening}
+              isSpeaking={isSpeaking}
+              onClearSpeech={() => { setLastAssistantSpeech(''); setLastUserSpeech('') }}
+            />
+          )}
+          <DemoChips onSelectPrompt={handleSendMessage} disabled={isLoading} />
           <TranscriptBar
-            lastUserSpeech={lastUserSpeech}
-            lastAssistantSpeech={lastAssistantSpeech}
             onSubmitText={handleSendMessage}
             isLoading={isLoading}
+            isListening={isListening}
+            isSpeaking={isSpeaking}
+            onToggleListening={toggleListening}
           />
-        </div>
+        </footer>
 
-        {/* Dynamic Rich Media Canvas (Carousels, Smart Home Cards, Ring Alerts) */}
-        <div className="w-full">
-          <RichMediaCanvas cards={cards} onBuyProduct={handleBuyProduct} />
-        </div>
-      </main>
-
-      {/* Bottom Footer with Quick Demo Chips */}
-      <footer className="w-full mt-auto pt-2 z-10">
-        <DemoChips onSelectPrompt={handleSendMessage} disabled={isLoading} />
-        <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono mt-3 px-2 border-t border-white/5 pt-2">
-          <span>Backend: http://localhost:8000 | SQLite: omnipulse.db</span>
-          <span>Amazon Developer Hackathon | Team OmniPulse</span>
-        </div>
-      </footer>
-
-      {/* Collapsible MCP Protocol Inspector Drawer */}
-      <McpInspector
-        isOpen={inspectorOpen}
-        onToggle={() => setInspectorOpen(!inspectorOpen)}
-        externalLogs={inspectorLogs}
-      />
+        <McpInspector
+          isOpen={inspectorOpen}
+          onToggle={() => setInspectorOpen(!inspectorOpen)}
+          externalLogs={inspectorLogs}
+        />
+      </div>
     </div>
   )
 }

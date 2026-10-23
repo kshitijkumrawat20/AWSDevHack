@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
-import { Send, Sparkles, User } from 'lucide-react'
+import { Send } from 'lucide-react'
+import { VoiceOrb } from './VoiceOrb'
 
 interface TranscriptBarProps {
   lastUserSpeech?: string
   lastAssistantSpeech?: string
   onSubmitText: (text: string) => void
   isLoading?: boolean
+  isListening: boolean
+  isSpeaking: boolean
+  onToggleListening: () => void
 }
 
 export const TranscriptBar: React.FC<TranscriptBarProps> = ({
-  lastUserSpeech,
-  lastAssistantSpeech,
   onSubmitText,
   isLoading = false,
+  isListening,
+  isSpeaking,
+  onToggleListening,
 }) => {
   const [inputText, setInputText] = useState('')
 
@@ -24,52 +29,39 @@ export const TranscriptBar: React.FC<TranscriptBarProps> = ({
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-3">
-      {/* Active Dialogue Bubbles */}
-      <div className="space-y-2">
-        {lastUserSpeech && (
-          <div className="flex items-start gap-2.5 justify-end">
-            <div className="glass-panel px-4 py-2.5 rounded-2xl rounded-tr-sm max-w-xl text-sm text-slate-100 bg-sky-950/40 border-sky-500/20 shadow-md">
-              <span className="font-semibold text-xs text-cyan-400 block mb-0.5">You</span>
-              {lastUserSpeech}
-            </div>
-            <div className="w-7 h-7 rounded-full bg-cyan-900/60 border border-cyan-400/30 flex items-center justify-center shrink-0">
-              <User className="w-4 h-4 text-cyan-300" />
-            </div>
-          </div>
-        )}
-
-        {lastAssistantSpeech && (
-          <div className="flex items-start gap-2.5 justify-start">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-sky-600 to-cyan-400 border border-white/20 flex items-center justify-center shrink-0 shadow-md">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <div className="glass-panel px-4 py-3 rounded-2xl rounded-tl-sm max-w-2xl text-sm text-slate-100 border-white/10 shadow-lg leading-relaxed">
-              <span className="font-semibold text-xs text-sky-400 block mb-0.5 flex items-center gap-1">
-                <span>Alexa+ OmniPulse</span>
-                {isLoading && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />}
-              </span>
-              {lastAssistantSpeech}
-            </div>
-          </div>
-        )}
+    <div className="glass-surface w-full max-w-3xl mx-auto rounded-full p-1.5 flex items-center gap-2.5">
+      <div className="shrink-0 pl-0.5">
+        <VoiceOrb
+          size="sm"
+          isListening={isListening}
+          isSpeaking={isSpeaking}
+          onClick={onToggleListening}
+          disabled={isLoading}
+        />
       </div>
 
-      {/* Manual Input Bar */}
-      <form onSubmit={handleFormSubmit} className="relative flex items-center">
+      <form onSubmit={handleFormSubmit} className="flex-1 flex items-center gap-2 min-w-0">
         <input
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder="Speak or type a command (e.g. 'Prep home for parents and find low-sodium items')..."
-          disabled={isLoading}
-          className="glass-input w-full px-5 py-3 pr-12 rounded-full text-sm placeholder:text-slate-500 shadow-inner"
+          placeholder={
+            isListening
+              ? 'Listening...'
+              : isLoading
+              ? 'Processing...'
+              : "Ask Alexa+ anything..."
+          }
+          disabled={isLoading || isListening}
+          className="glass-input w-full rounded-full px-4 py-2 text-sm"
+          style={{ color: 'var(--text-primary)' }}
         />
         <button
           type="submit"
           disabled={!inputText.trim() || isLoading}
-          className="absolute right-2 p-2 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 disabled:opacity-40 disabled:hover:bg-cyan-500 transition-colors shadow-md"
-          title="Send command"
+          className="p-2.5 rounded-full font-semibold transition-all active:scale-95 shrink-0 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+          style={{ background: 'var(--accent)', color: 'var(--surface-base)' }}
+          title="Send"
         >
           <Send className="w-4 h-4" />
         </button>

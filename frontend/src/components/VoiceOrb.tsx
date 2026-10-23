@@ -1,11 +1,12 @@
 import React from 'react'
-import { Mic, MicOff, Volume2, Sparkles } from 'lucide-react'
+import { Mic, Volume2, Sparkles } from 'lucide-react'
 
 interface VoiceOrbProps {
   isListening: boolean
   isSpeaking: boolean
   onClick: () => void
   disabled?: boolean
+  size?: 'sm' | 'md' | 'lg'
 }
 
 export const VoiceOrb: React.FC<VoiceOrbProps> = ({
@@ -13,81 +14,68 @@ export const VoiceOrb: React.FC<VoiceOrbProps> = ({
   isSpeaking,
   onClick,
   disabled = false,
+  size = 'sm',
 }) => {
+  const dim = size === 'sm' ? 42 : 64
+
   return (
-    <div className="flex flex-col items-center justify-center relative my-2">
-      {/* Expanding Ripple Rings when Listening */}
+    <div className="relative flex items-center justify-center shrink-0">
+      {/* Ripple ring when listening */}
       {isListening && (
-        <>
-          <div className="orb-ripple w-36 h-36 -z-10" />
-          <div
-            className="orb-ripple w-48 h-48 -z-10"
-            style={{ animationDelay: '0.8s' }}
-          />
-          <div
-            className="orb-ripple w-60 h-60 -z-10"
-            style={{ animationDelay: '1.6s' }}
-          />
-        </>
+        <div
+          className="absolute rounded-full animate-ping -z-10"
+          style={{
+            inset: '-6px',
+            border: '1px solid var(--accent)',
+            opacity: 0.4,
+            animationDuration: '2.2s',
+          }}
+        />
       )}
 
-      {/* Main Interactive Orb Button */}
       <button
         onClick={onClick}
         disabled={disabled}
-        title={isListening ? 'Listening... click to stop' : 'Click to talk to Alexa+'}
+        title={isListening ? 'Listening — tap to stop' : 'Tap to speak'}
+        className={`group transition-transform cursor-pointer ${isListening ? 'animate-orb-listening' : 'hover:scale-105'} active:scale-90`}
         style={{
-          width: '84px',
-          height: '84px',
-          borderRadius: '9999px',
+          width: dim,
+          height: dim,
+          borderRadius: 'var(--radius-full)',
           background: isListening
-            ? 'radial-gradient(circle at 35% 35%, #67e8f9 0%, #00d2ff 45%, #0284c7 85%, #0369a1 100%)'
+            ? 'linear-gradient(135deg, var(--accent), #0891B2)'
             : isSpeaking
-            ? 'radial-gradient(circle at 35% 35%, #a7f3d0 0%, #10b981 50%, #047857 100%)'
-            : 'radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 50%, #0f172a 100%)',
+            ? 'linear-gradient(135deg, var(--success), #059669)'
+            : 'linear-gradient(135deg, #0EA5E9, #0369A1)',
           boxShadow: isListening
-            ? '0 0 35px rgba(0, 210, 255, 0.9), 0 0 70px rgba(14, 165, 233, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.8)'
+            ? '0 0 24px var(--accent-glow)'
             : isSpeaking
-            ? '0 0 30px rgba(16, 185, 129, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.6)'
-            : '0 0 20px rgba(2, 132, 199, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.3)',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          cursor: disabled ? 'not-allowed' : 'pointer',
-          border: '2px solid rgba(255, 255, 255, 0.25)',
+            ? '0 0 20px rgba(52, 211, 153, 0.35)'
+            : '0 0 12px rgba(14, 165, 233, 0.25)',
+          border: '1px solid rgba(255,255,255,0.2)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'relative',
+          cursor: disabled ? 'not-allowed' : 'pointer',
         }}
-        className={`group ${isListening ? 'animate-orb-listening' : 'hover:scale-105'}`}
       >
         {isListening ? (
-          <Mic className="w-8 h-8 text-white drop-shadow-md animate-pulse" />
+          <Mic className="w-5 h-5 animate-pulse" style={{ color: 'var(--surface-base)' }} />
         ) : isSpeaking ? (
-          <Volume2 className="w-8 h-8 text-white drop-shadow-md animate-bounce" />
+          <Volume2 className="w-5 h-5" style={{ color: 'white' }} />
         ) : (
-          <Sparkles className="w-8 h-8 text-white/90 group-hover:rotate-12 transition-transform duration-300" />
+          <Sparkles className="w-5 h-5 group-hover:rotate-12 transition-transform" style={{ color: 'white' }} />
         )}
       </button>
 
-      {/* State Badge */}
-      <div className="mt-3 flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium tracking-wide bg-slate-900/80 border border-white/10 shadow-sm">
-        <span
-          className={`w-2 h-2 rounded-full ${
-            isListening
-              ? 'bg-cyan-400 animate-ping'
-              : isSpeaking
-              ? 'bg-emerald-400 animate-pulse'
-              : 'bg-sky-500'
-          }`}
-        />
-        <span className="text-slate-300">
-          {isListening
-            ? 'Listening to you...'
-            : isSpeaking
-            ? 'Alexa+ Speaking'
-            : 'Alexa+ Ready'}
-        </span>
-      </div>
+      {/* Mini wave bars */}
+      {(isListening || isSpeaking) && (
+        <div className="absolute -bottom-1 flex items-center gap-px pointer-events-none">
+          <span className="wave-bar" style={{ animationDelay: '0.1s', height: '8px' }} />
+          <span className="wave-bar" style={{ animationDelay: '0.3s', height: '12px' }} />
+          <span className="wave-bar" style={{ animationDelay: '0.2s', height: '8px' }} />
+        </div>
+      )}
     </div>
   )
 }
