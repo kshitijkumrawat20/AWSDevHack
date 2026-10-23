@@ -1,0 +1,34 @@
+# Alexa+ OmniPulse — Backend Dependencies
+# Python 3.11+ / FastAPI backend implementing MCP spec 2025-11-25 over Streamable HTTP.
+# Install with: pip install -r requirements.txt
+
+# --- Core runtime dependencies ---
+# FastAPI web framework (entry point + Streamable HTTP /mcp endpoint)
+fastapi>=0.110
+# ASGI server (uvicorn main:app)
+uvicorn[standard]>=0.29
+# Data validation (Pydantic models for requests/responses and tool schemas)
+pydantic>=2.6
+# HTTP client (internal MCP tools/call invocations from the agent + tests)
+httpx>=0.27
+# SSE streaming support for MCP Streamable HTTP and proactive Ring event fan-out
+sse-starlette>=2.1
+
+# --- Test dependencies ---
+# Test framework (unit + integration tests via FastAPI TestClient)
+pytest>=8.0
+# Property-based testing (validates the 10 correctness properties in design.md)
+hypothesis>=6.100
+
+# --- Optional LLM dependencies ---
+# The smart-fallback agent runs WITHOUT any of these. Install them and set the
+# relevant environment variables (GEMINI_API_KEY / OPENAI_API_KEY / AWS Bedrock
+# credentials) only if you want richer LLM-driven orchestration.
+# Commented out by default so judges can `pip install -r requirements.txt`
+# with zero external configuration and no heavy LLM SDKs.
+
+# langgraph>=0.2                 # LangGraph multi-step agent orchestration
+# langchain-core>=0.2            # LangChain core primitives
+# langchain-google-genai>=1.0    # Google Gemini integration
+# langchain-openai>=0.1          # OpenAI integration
+# boto3>=1.34                    # AWS Bedrock (Claude) integration

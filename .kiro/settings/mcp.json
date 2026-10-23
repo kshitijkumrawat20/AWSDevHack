@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "amazon-devices-builder": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-everything"]
+    }
+  }
+}

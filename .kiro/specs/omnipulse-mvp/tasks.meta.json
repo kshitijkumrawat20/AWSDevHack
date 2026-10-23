@@ -1,0 +1,267 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 Create `backend/requirements.txt` with pinned dependency versions": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580883858
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580912990
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792581548071
+      }
+    ],
+    "1.2 Implement `backend/database.py` — DatabaseManager with schema creation and seed data": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580884362
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580922335
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792581558235
+      }
+    ],
+    "2.1 Implement `backend/mcp_server.py` — JSON-RPC 2.0 router with 6-tool registry": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580885057
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792581585545
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792581958024
+      }
+    ],
+    "3.1 Implement `backend/tools/memory_tools.py` — household memory retrieval and persistence": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580885709
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582077584
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586161444
+      }
+    ],
+    "3.2 Implement `backend/tools/commerce_tools.py` — product search, carousel builder, and instant checkout": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580886042
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582091373
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586177680
+      }
+    ],
+    "3.3 Implement `backend/tools/smarthome_tools.py` — lighting, HVAC, and routine state control": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580886451
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582103744
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586190636
+      }
+    ],
+    "3.4 Implement `backend/tools/ring_tools.py` — simulated Ring camera/doorbell event handler": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580886853
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582115827
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586203058
+      }
+    ],
+    "4.1 Implement `backend/agent.py` — AgentOrchestrator with smart fallback and LLM path": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580887545
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586219097
+      }
+    ],
+    "4.2 Implement `backend/main.py` — FastAPI entry point with all endpoints": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580887952
+      },
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586234386
+      }
+    ],
+    "5.1 Scaffold Vite + React + TypeScript + Tailwind project in `frontend/`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580888383
+      }
+    ],
+    "5.2 Build core layout and glassmorphic dashboard shell in `frontend/src/App.tsx`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580888986
+      }
+    ],
+    "5.3 Build MCP Protocol Inspector drawer in `frontend/src/components/McpInspector.tsx`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580889225
+      }
+    ],
+    "5.4 Build Rich Media Canvas in `frontend/src/components/RichMediaCanvas.tsx` with card renderers": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580889484
+      }
+    ],
+    "5.5 Build voice I/O with Web Speech API in `frontend/src/hooks/useVoice.ts` and `frontend/src/components/VoiceOrb.tsx`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580890111
+      }
+    ],
+    "5.6 Build quick-demo chips and Simulate Ring Event button, wire all components into App": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580890449
+      }
+    ],
+    "6.1 Create `docker-compose.yml` for 1-command startup": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580890646
+      }
+    ],
+    "6.2 Create `LICENSE` file with MIT License": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580890975
+      }
+    ],
+    "6.3 Create `README.md` with architecture, setup guide, and MCP verification steps": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580891593
+      }
+    ],
+    "6.4 Run verification: confirm MCP handshake, tool count, and backend startup": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792580891874
+      }
+    ],
+    "1. Database initialization and project dependencies": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792581559282
+      }
+    ],
+    "2. MCP Server (Streamable HTTP, spec 2025-11-25)": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792581959288
+      }
+    ],
+    "1.3 Write unit tests for DatabaseManager in `backend/tests/test_database.py`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582016608
+      }
+    ],
+    "1.4 Write property-based test for idempotent seeding in `backend/tests/test_database_property.py`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582031597
+      }
+    ],
+    "2.2 Write unit tests for MCP server in `backend/tests/test_mcp_server.py`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582043822
+      }
+    ],
+    "2.3 Write property-based tests for protocol version and tool count in `backend/tests/test_mcp_server_property.py`": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792582052503
+      }
+    ],
+    "3. MCP domain tool modules": [
+      {
+        "executionId": "dab457c0-4a96-41ec-ab56-a5e1c593495f",
+        "chatSessionId": "sess_e1c7c742-5e45-41b7-86c8-68d5e7f57517",
+        "timestamp": 1792586203716
+      }
+    ]
+  }
+}
