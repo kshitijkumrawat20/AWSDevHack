@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Alexa+ OmniPulse Launch Video</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #080C14;
+        color: #F8FAFC;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        background: radial-gradient(circle at 50% 20%, #151D2F 0%, #080C14 85%);
+        overflow: hidden;
+      }
+
+      /* Ambient Glow Spheres */
+      .ambient-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 1;
+      }
+      .glow-cyan {
+        width: 750px;
+        height: 750px;
+        left: 200px;
+        top: -150px;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.18) 0%, rgba(8, 12, 20, 0) 70%);
+      }
+      .glow-indigo {
+        width: 800px;
+        height: 800px;
+        right: 150px;
+        bottom: -200px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(8, 12, 20, 0) 70%);
+      }
+      .glow-amber {
+        width: 600px;
+        height: 600px;
+        left: 650px;
+        top: 250px;
+        background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, rgba(8, 12, 20, 0) 70%);
+      }
+
+      /* Grid Pattern Overlay */
+      .grid-pattern {
+        position: absolute;
+        inset: 0;
+        background-size: 48px 48px;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, transparent 75%);
+        z-index: 2;
+      }
+
+      /* Glass Panels */
+      .glass-card {
+        background: rgba(30, 41, 59, 0.65);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 24px;
+        box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      }
+
+      .glass-pill {
+        background: rgba(148, 163, 184, 0.12);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 9999px;
+      }
+
+      /* Scene Container */
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .scene-content {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Voice Orb */
+      .orb-core {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 30%, #38BDF8 0%, #0284C7 50%, #0369A1 100%);
+        box-shadow: 
+          0 0 50px rgba(34, 211, 238, 0.6),
+          0 0 100px rgba(14, 165, 233, 0.4),
+          inset 0 0 30px rgba(255, 255, 255, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .equalizer-bar {
+        width: 5px;
+        border-radius: 4px;
+        background: #FFFFFF;
+        margin: 0 3px;
+        height: 24px;
+      }
+
+      /* Monospace Tag */
+      .font-mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="22"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Background Ambient Elements -->
+      <div class="ambient-glow glow-cyan"></div>
+      <div class="ambient-glow glow-indigo"></div>
+      <div class="ambient-glow glow-amber"></div>
+      <div class="grid-pattern"></div>
+
+      <!-- Persistent Top Status Strip -->
+      <div id="status-strip" style="position: absolute; top: 32px; left: 48px; right: 48px; display: flex; align-items: center; justify-content: space-between; z-index: 20;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div class="glass-pill" style="padding: 8px 18px; font-weight: 700; font-size: 15px; letter-spacing: 0.04em; color: #F8FAFC;">
+            Alexa+ OmniPulse
+          </div>
+          <div class="glass-pill font-mono" style="padding: 6px 14px; font-size: 13px; color: #22D3EE; border-color: rgba(34, 211, 238, 0.3);">
+            MCP 2025-11-25 • Streamable HTTP
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px; font-size: 15px; color: #94A3B8;">
+          <span>10:42 AM</span>
+          <span>•</span>
+          <span>72°F Seattle</span>
+          <div class="glass-pill" style="padding: 6px 14px; font-size: 13px; color: #34D399; display: flex; align-items: center; gap: 6px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: #34D399;"></span>
+            Live Ambient
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 1: The Hook & Introduction (0s - 4.5s) -->
+      <section id="scene-1" class="scene clip" data-start="0" data-duration="4.5" data-track-index="0">
+        <div id="scene-1-content" class="scene-content">
+          <div id="s1-badge" class="glass-pill" style="padding: 8px 24px; font-size: 14px; color: #22D3EE; font-weight: 600; margin-bottom: 24px; letter-spacing: 0.05em; text-transform: uppercase;">
+            Amazon Developer Hackathon • Alexa+ Track
+          </div>
+          
+          <h1 id="s1-title" style="font-size: 80px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; text-align: center; max-width: 1400px; margin-bottom: 20px;">
+            Autonomous. Context-Aware.<br />
+            <span style="background: linear-gradient(135deg, #22D3EE 0%, #818CF8 50%, #C084FC 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+              The Next-Gen Smart Display.
+            </span>
+          </h1>
+
+          <p id="s1-sub" style="font-size: 26px; color: #94A3B8; max-width: 900px; text-align: center; line-height: 1.5; margin-bottom: 40px;">
+            Powered by SQLite Cross-Session Memory & Model Context Protocol (Spec 2025-11-25)
+          </p>
+
+          <div id="s1-orb" class="orb-core">
+            <div class="equalizer-bar" style="height: 38px;"></div>
+            <div class="equalizer-bar" style="height: 52px;"></div>
+            <div class="equalizer-bar" style="height: 68px;"></div>
+            <div class="equalizer-bar" style="height: 48px;"></div>
+            <div class="equalizer-bar" style="height: 30px;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 2: Memory-First Autonomous Orchestration (4.5s - 9.5s) -->
+      <section id="scene-2" class="scene clip" data-start="4.5" data-duration="5.0" data-track-index="0">
+        <div id="scene-2-content" class="scene-content" style="justify-content: flex-start; padding-top: 140px;">
+          <!-- Voice Prompt Bar -->
+          <div id="s2-prompt" class="glass-card" style="padding: 20px 36px; display: flex; align-items: center; gap: 20px; max-width: 1100px; width: 100%; border-color: rgba(34, 211, 238, 0.4); margin-bottom: 32px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #22D3EE; display: flex; align-items: center; justify-content: center; color: #080C14; font-weight: 800; font-size: 18px;">
+              🎙️
+            </div>
+            <div style="font-size: 28px; font-weight: 600; color: #F8FAFC;">
+              “Alexa, prepare for parents visiting tomorrow.”
+            </div>
+          </div>
+
+          <!-- Memory First Execution Cards Grid -->
+          <div style="display: flex; gap: 32px; max-width: 1400px; width: 100%;">
+            <!-- Left: Household Memory Retrieval Card -->
+            <div id="s2-memory-card" class="glass-card" style="flex: 1; padding: 36px; border-left: 6px solid #22D3EE;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #22D3EE; letter-spacing: 0.05em;">
+                  🧠 Step 1: Memory-First Query
+                </div>
+                <span class="font-mono" style="font-size: 12px; color: #94A3B8;">get_household_memory</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 12px; color: #F8FAFC;">
+                Household Health & Schedules Recalled:
+              </h3>
+              <ul style="list-style: none; font-size: 17px; color: #CBD5E1; line-height: 1.8;">
+                <li>✓ <strong>Schedule:</strong> Parents arriving tomorrow afternoon</li>
+                <li>✓ <strong>Health:</strong> Father has knee discomfort (needs joint care)</li>
+                <li>✓ <strong>Dietary:</strong> Low-sodium Ayurvedic wellness items preferred</li>
+                <li>✓ <strong>Ambience:</strong> Warm 2700K lighting preferred</li>
+              </ul>
+            </div>
+
+            <!-- Right: Smart Home Multi-Service Dispatch -->
+            <div id="s2-smarthome-card" class="glass-card" style="flex: 1; padding: 36px; border-left: 6px solid #FBBF24;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div style="font-size: 14px; font-weight: 700; text-transform: uppercase; color: #FBBF24; letter-spacing: 0.05em;">
+                  ⚡ Step 2: Multi-Service Action
+                </div>
+                <span class="font-mono" style="font-size: 12px; color: #94A3B8;">update_smarthome_state</span>
+              </div>
+              <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 16px; color: #F8FAFC;">
+                Smart Home State Synchronized:
+              </h3>
+              <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                <div class="glass-pill" style="padding: 14px 20px; flex: 1; border-color: rgba(251, 191, 36, 0.4); background: rgba(251, 191, 36, 0.08);">
+                  <div style="font-size: 12px; color: #FBBF24; font-weight: 600;">LIVING ROOM LIGHTS</div>
+                  <div style="font-size: 20px; font-weight: 700; color: #F8FAFC; margin-top: 4px;">Warm 2700K (75%)</div>
+                </div>
+                <div class="glass-pill" style="padding: 14px 20px; flex: 1; border-color: rgba(34, 211, 238, 0.4); background: rgba(34, 211, 238, 0.08);">
+                  <div style="font-size: 12px; color: #22D3EE; font-weight: 600;">CLIMATE HVAC</div>
+                  <div style="font-size: 20px; font-weight: 700; color: #F8FAFC; margin-top: 4px;">Target: 72°F Heat</div>
+                </div>
+              </div>
+              <p style="font-size: 15px; color: #34D399; font-weight: 500;">
+                ✓ Lights dimmed to calming warm hue; temperature raised for comfortable guest stay.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 3: Shoppable Visual Carousel & 1-Click Buy (9.5s - 14.0s) -->
+      <section id="scene-3" class="scene clip" data-start="9.5" data-duration="4.5" data-track-index="0">
+        <div id="scene-3-content" class="scene-content" style="justify-content: flex-start; padding-top: 130px;">
+          <div id="s3-header" style="text-align: center; margin-bottom: 28px;">
+            <div class="glass-pill font-mono" style="display: inline-block; padding: 6px 18px; font-size: 13px; color: #34D399; margin-bottom: 12px; border-color: rgba(52, 211, 153, 0.3);">
+              search_and_build_carousel + execute_instant_checkout
+            </div>
+            <h2 style="font-size: 46px; font-weight: 800; letter-spacing: -0.03em;">
+              Context-Aware Shopping & 1-Click Checkout
+            </h2>
+          </div>
+
+          <div style="display: flex; gap: 28px; max-width: 1500px; width: 100%;">
+            <!-- Product 1 Card -->
+            <div id="s3-card-1" class="glass-card" style="flex: 1; padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="height: 160px; border-radius: 16px; background: linear-gradient(135deg, #1E293B, #0F172A); display: flex; align-items: center; justify-content: center; font-size: 54px; margin-bottom: 16px;">
+                  🍵
+                </div>
+                <div style="font-size: 12px; color: #22D3EE; font-weight: 700; text-transform: uppercase;">Ayurvedic Joint Care</div>
+                <h4 style="font-size: 20px; font-weight: 700; margin: 4px 0 8px;">Herbal Joint Support Tea</h4>
+                <p style="font-size: 14px; color: #94A3B8; line-height: 1.5;">Low-sodium formulation with Boswellia and Ginger root for knee mobility.</p>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+                <div class="font-mono" style="font-size: 22px; font-weight: 700; color: #34D399;">$15.75</div>
+                <div class="glass-pill" style="padding: 6px 14px; font-size: 12px; font-weight: 600; color: #22D3EE;">Prime Delivery</div>
+              </div>
+            </div>
+
+            <!-- Product 2 Card -->
+            <div id="s3-card-2" class="glass-card" style="flex: 1; padding: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="height: 160px; border-radius: 16px; background: linear-gradient(135deg, #1E293B, #0F172A); display: flex; align-items: center; justify-content: center; font-size: 54px; margin-bottom: 16px;">
+                  🫚
+                </div>
+                <div style="font-size: 12px; color: #FBBF24; font-weight: 700; text-transform: uppercase;">Anti-Inflammatory</div>
+                <h4 style="font-size: 20px; font-weight: 700; margin: 4px 0 8px;">Turmeric Curcumin Latte</h4>
+                <p style="font-size: 14px; color: #94A3B8; line-height: 1.5;">Golden milk blend with black pepper extract, zero added sodium or sugar.</p>
+              </div>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.08);">
+                <div class="font-mono" style="font-size: 22px; font-weight: 700; color: #34D399;">$18.50</div>
+                <div class="glass-pill" style="padding: 6px 14px; font-size: 12px; font-weight: 600; color: #22D3EE;">Prime Delivery</div>
+              </div>
+            </div>
+
+            <!-- 1-Click Order Confirmation Card -->
+            <div id="s3-card-3" class="glass-card" style="flex: 1.2; padding: 32px; background: rgba(16, 185, 129, 0.12); border-color: rgba(52, 211, 153, 0.4); display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                  <div style="width: 38px; height: 38px; border-radius: 50%; background: #34D399; display: flex; align-items: center; justify-content: center; color: #080C14; font-weight: 800; font-size: 18px;">
+                    ✓
+                  </div>
+                  <div>
+                    <h3 style="font-size: 22px; font-weight: 700; color: #F8FAFC;">1-Click Order Placed</h3>
+                    <div class="font-mono" style="font-size: 13px; color: #34D399;">#AMZN-98214-OMNI</div>
+                  </div>
+                </div>
+                <div style="background: rgba(0,0,0,0.25); border-radius: 16px; padding: 18px; margin: 16px 0;">
+                  <div style="font-size: 14px; color: #94A3B8; margin-bottom: 6px;">Total Charged:</div>
+                  <div class="font-mono" style="font-size: 32px; font-weight: 800; color: #34D399;">$34.25</div>
+                  <div style="font-size: 13px; color: #CBD5E1; margin-top: 6px;">Shipped to Seattle Home • Arrives Tomorrow 9 AM</div>
+                </div>
+              </div>
+              <div class="glass-pill" style="padding: 10px 18px; text-align: center; font-size: 13px; font-weight: 600; color: #F8FAFC;">
+                🛒 Autonomously verified against father's dietary profile
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 4: Proactive Ring Doorbell & Cross-Device Unlock (14.0s - 18.0s) -->
+      <section id="scene-4" class="scene clip" data-start="14.0" data-duration="4.0" data-track-index="0">
+        <div id="scene-4-content" class="scene-content" style="justify-content: flex-start; padding-top: 140px;">
+          <div id="s4-header" style="text-align: center; margin-bottom: 30px;">
+            <div class="glass-pill font-mono" style="display: inline-block; padding: 6px 18px; font-size: 13px; color: #FBBF24; margin-bottom: 12px; border-color: rgba(251, 191, 36, 0.3);">
+              POST /webhook/ring • handle_ring_event
+            </div>
+            <h2 style="font-size: 46px; font-weight: 800; letter-spacing: -0.03em;">
+              Proactive Ring Doorbell Camera Intelligence
+            </h2>
+          </div>
+
+          <div style="display: flex; gap: 36px; max-width: 1400px; width: 100%;">
+            <!-- Live Porch Camera Feed Card -->
+            <div id="s4-cam-card" class="glass-card" style="flex: 1.2; padding: 24px; position: relative; overflow: hidden;">
+              <div style="height: 280px; border-radius: 18px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=80') center/cover; display: flex; flex-direction: column; justify-content: space-between; padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <div class="glass-pill" style="padding: 6px 12px; font-size: 12px; font-weight: 700; color: #EF4444; display: flex; align-items: center; gap: 6px;">
+                    <span style="width: 8px; height: 8px; border-radius: 50%; background: #EF4444;"></span>
+                    LIVE PORCH CAM
+                  </div>
+                  <div class="font-mono" style="font-size: 12px; color: #FFFFFF;">1080p 60fps</div>
+                </div>
+                <div style="font-size: 20px; font-weight: 700; color: #FFFFFF; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">
+                  Ring Doorbell Alert: Motion & Chime
+                </div>
+              </div>
+            </div>
+
+            <!-- Memory Cross-Verification & Auto Unlock -->
+            <div id="s4-action-card" class="glass-card" style="flex: 1; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; border-color: rgba(52, 211, 153, 0.4);">
+              <div>
+                <div style="font-size: 13px; font-weight: 700; color: #34D399; text-transform: uppercase; margin-bottom: 12px;">
+                  Cross-Referencing Household Memory
+                </div>
+                <h3 style="font-size: 26px; font-weight: 700; margin-bottom: 16px;">
+                  “Parents Arrived at Door”
+                </h3>
+                <p style="font-size: 16px; color: #CBD5E1; line-height: 1.6; margin-bottom: 24px;">
+                  Memory cross-check confirmed schedule: <em>Parents scheduled for visit</em>. Automatic entry authorized.
+                </p>
+              </div>
+
+              <div id="s4-unlock-pill" class="glass-pill" style="padding: 18px 24px; background: rgba(52, 211, 153, 0.2); border-color: #34D399; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <span style="font-size: 26px;">🔓</span>
+                  <div style="font-size: 18px; font-weight: 700; color: #F8FAFC;">Front Door Unlocked</div>
+                </div>
+                <div class="font-mono" style="font-size: 13px; color: #34D399; font-weight: 600;">STATUS: OPEN</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCENE 5: Developer Transparency & Outro (18.0s - 22.0s) -->
+      <section id="scene-5" class="scene clip" data-start="18.0" data-duration="4.0" data-track-index="0">
+        <div id="scene-5-content" class="scene-content">
+          <div id="s5-badge" class="glass-pill font-mono" style="padding: 8px 20px; font-size: 13px; color: #22D3EE; margin-bottom: 20px;">
+            Streamable HTTP MCP • Specification 2025-11-25
+          </div>
+
+          <h2 id="s5-title" style="font-size: 72px; font-weight: 800; letter-spacing: -0.04em; text-align: center; margin-bottom: 16px;">
+            Built for Alexa+ Hackathon
+          </h2>
+
+          <p id="s5-sub" style="font-size: 24px; color: #94A3B8; text-align: center; margin-bottom: 40px;">
+            Autonomous Ambient Multimodal AI with Zero-Setup Friction
+          </p>
+
+          <!-- 4 Feature Badges -->
+          <div id="s5-badges" style="display: flex; gap: 24px; max-width: 1200px; width: 100%; justify-content: center; margin-bottom: 48px;">
+            <div class="glass-pill" style="padding: 12px 24px; font-size: 16px; font-weight: 600; color: #22D3EE;">
+              ✓ Memory-First Invariant
+            </div>
+            <div class="glass-pill" style="padding: 12px 24px; font-size: 16px; font-weight: 600; color: #34D399;">
+              ✓ 38 Unit & Property Tests
+            </div>
+            <div class="glass-pill" style="padding: 12px 24px; font-size: 16px; font-weight: 600; color: #FBBF24;">
+              ✓ Zero-Key Smart Fallback
+            </div>
+            <div class="glass-pill" style="padding: 12px 24px; font-size: 16px; font-weight: 600; color: #C084FC;">
+              ✓ Docker & MIT Open Source
+            </div>
+          </div>
+
+          <!-- GitHub Repo Link -->
+          <div id="s5-link" class="glass-card font-mono" style="padding: 16px 36px; font-size: 20px; font-weight: 700; color: #F8FAFC; border-color: rgba(34, 211, 238, 0.4);">
+            github.com/kshitijkumrawat20/AWSDevHack
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- GSAP Animation Timelines -->
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // SCENE 1 TIMELINE (0s - 4.5s)
+      tl.fromTo("#s1-badge", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.2);
+      tl.fromTo("#s1-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.4);
+      tl.fromTo("#s1-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.6);
+      tl.fromTo("#s1-orb", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(1.7)" }, 0.8);
+      tl.to("#scene-1-content", { y: -30, opacity: 0, duration: 0.5, ease: "power2.in" }, 4.0);
+
+      // SCENE 2 TIMELINE (4.5s - 9.5s)
+      tl.fromTo("#s2-prompt", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 4.6);
+      tl.fromTo("#s2-memory-card", { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 5.2);
+      tl.fromTo("#s2-smarthome-card", { x: 50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 5.6);
+      tl.to("#scene-2-content", { y: -30, opacity: 0, duration: 0.5, ease: "power2.in" }, 9.0);
+
+      // SCENE 3 TIMELINE (9.5s - 14.0s)
+      tl.fromTo("#s3-header", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 9.6);
+      tl.fromTo("#s3-card-1", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 10.0);
+      tl.fromTo("#s3-card-2", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 10.3);
+      tl.fromTo("#s3-card-3", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.4)" }, 10.7);
+      tl.to("#scene-3-content", { y: -30, opacity: 0, duration: 0.5, ease: "power2.in" }, 13.5);
+
+      // SCENE 4 TIMELINE (14.0s - 18.0s)
+      tl.fromTo("#s4-header", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 14.1);
+      tl.fromTo("#s4-cam-card", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 14.4);
+      tl.fromTo("#s4-action-card", { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 14.7);
+      tl.fromTo("#s4-unlock-pill", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.5)" }, 15.3);
+      tl.to("#scene-4-content", { y: -30, opacity: 0, duration: 0.5, ease: "power2.in" }, 17.5);
+
+      // SCENE 5 TIMELINE (18.0s - 22.0s)
+      tl.fromTo("#s5-badge", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 18.1);
+      tl.fromTo("#s5-title", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 18.3);
+      tl.fromTo("#s5-sub", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 18.6);
+      tl.fromTo("#s5-badges", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 18.9);
+      tl.fromTo("#s5-link", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.5)" }, 19.3);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

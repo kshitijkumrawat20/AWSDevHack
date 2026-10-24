@@ -227,6 +227,19 @@ graph TD
   - [`RichMediaCanvas.tsx`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/frontend/src/components/RichMediaCanvas.tsx): Upgraded product carousels, smart home cards, ring alert cards, and instant checkout cards to `glass-surface`.
 - **Validation**: Production build passed cleanly with zero TypeScript errors (`dist/index.html` built in 2.71s).
 
+### Phase 10: Launch Video & Social Media Generation via `/brag` (Hyperframes)
+- **Agent Skill Applied**: Installed and executed `/brag` launch video generation skill powered by Hyperframes and GSAP.
+- **Narrative Arc & Motion Production**:
+  - Authored [`brag-output/brag-plan.md`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/brag-plan.md) and [`brag-output/composition-brief.md`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/composition-brief.md).
+  - Built a 5-scene 22.0-second 1920×1080 30fps GSAP composition in [`brag-output/composition/index.html`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/composition/index.html).
+  - Validated with `npx hyperframes check` (0 errors).
+  - Rendered full MP4 video via `npx hyperframes render --output ../brag.mp4`.
+  - Extracted poster frame `brag.jpg` at 11.5s (featuring the 1-click cart and Ayurvedic carousel) and baked it into frame 0 with FFmpeg.
+- **Generated Deliverables**:
+  - Video Artifact: [`brag-output/brag.mp4`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/brag.mp4) (2.6 MB, 1080p, 22.0s duration).
+  - Poster Frame: [`brag-output/brag.jpg`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/brag.jpg).
+  - Social Copy: [`brag-output/share-copy.txt`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/share-copy.txt) and [`brag-output/share-copy-variants.md`](file:///c:/Users/hp/Desktop/Hackathons/AWSDevHack/brag-output/share-copy-variants.md).
+
 ---
 
 ## 5. Verification Commands & Operational Guide

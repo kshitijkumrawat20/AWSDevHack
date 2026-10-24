@@ -1,0 +1,12 @@
+Just built Alexa+ OmniPulse for the Amazon Developer Hackathon! 🚀
+
+An autonomous ambient smart display combining:
+🧠 SQLite cross-session memory (Memory-First Invariant)
+⚡ Multi-service agent orchestration (lights + climate)
+🛒 Shoppable visual carousels & 1-click checkout
+🔔 Proactive Ring doorbell cross-check & auto-unlock
+🛠️ Model Context Protocol (MCP 2025-11-25) over Streamable HTTP
+
+Check it out: https://github.com/kshitijkumrawat20/AWSDevHack
+
+#AmazonAlexa #MCP #AI #FastAPI #React #BuildInPublic
