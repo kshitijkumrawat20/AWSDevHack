@@ -62,8 +62,8 @@ It prints the selected seed and returned place names, never the API key. A confi
 ## Tests
 
 ```bash
-pip install -r requirements.txt
-pytest -q
+uv pip install -r requirements.txt
+uv run pytest -q
 ```
 
 Unit tests use synthetic fixtures and do not spend Qloo API quota. Live API verification requires the event key and must be run before submission.
