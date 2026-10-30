@@ -21,7 +21,7 @@ async def main() -> int:
         print("Missing QLOO_API_KEY. Set the event key in your shell or local .env.")
         return 2
 
-    city = sys.argv[1] if len(sys.argv) > 1 else "Indore"
+    target = sys.argv[1] if len(sys.argv) > 1 else "movie"
     try:
         matches = await client.search_entities("Spirited Away", "movie", take=5)
         if not matches:
@@ -29,17 +29,17 @@ async def main() -> int:
             return 1
 
         seed = matches[0]
-        places = await client.recommend("place", [seed["entity_id"]], city=city, take=5)
+        recommendations = await client.recommend(target, [seed["entity_id"]], take=5)
         print(json.dumps({
             "search_status": "ok",
             "resolved_entity": {"name": seed["name"], "type": seed.get("type")},
-            "recommendation_status": "ok" if places else "empty",
-            "city": city,
-            "place_count": len(places),
-            "place_names": [item["name"] for item in places],
+            "recommendation_status": "ok" if recommendations else "empty",
+            "target_category": target,
+            "recommendation_count": len(recommendations),
+            "recommendation_names": [item["name"] for item in recommendations],
             "credential_printed": False,
         }, indent=2))
-        return 0 if places else 1
+        return 0 if recommendations else 1
     except QlooAPIError as exc:
         print(f"Qloo smoke test failed: {exc}")
         return 1
