@@ -1,3 +1,17 @@
+# OmniPulse × Qloo — Qloo Agentic Hackathon edition
+
+This branch contains the standalone Qloo Agentic Hackathon application in [qloo-agentic/](./qloo-agentic/).
+
+- **What it does:** resolves user-selected cultural references with Qloo, asks the user to confirm exact entity matches, then uses Qloo Taste Graph affinity recommendations to build an occasion-aware experience across places, films and artists.
+- **Run locally:** follow [qloo-agentic/README.md](./qloo-agentic/README.md).
+- **Live key smoke test:** run `python scripts/smoke_qloo.py Indore` from the `qloo-agentic/` directory.
+- **Secrets:** set `QLOO_API_KEY` only in the backend environment or an untracked local `.env` file. Never put it in the browser or source control.
+- **License:** MIT, see [LICENSE](./LICENSE).
+
+The original Alexa+ OmniPulse source on the default `main` branch is unchanged. This `qloo-agentic` branch is isolated for the Qloo competition.
+
+---
+
 # Alexa+ OmniPulse
 
 > **Autonomous, Context-Aware Multi-Service Ambient Orchestrator**  
