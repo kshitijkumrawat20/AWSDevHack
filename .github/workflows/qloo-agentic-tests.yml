@@ -1,0 +1,31 @@
+name: Qloo Agentic edition tests
+
+on:
+  push:
+    branches: [qloo-agentic]
+    paths:
+      - "qloo-agentic/**"
+      - ".github/workflows/qloo-agentic-tests.yml"
+  pull_request:
+    branches: [qloo-agentic]
+    paths:
+      - "qloo-agentic/**"
+      - ".github/workflows/qloo-agentic-tests.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: qloo-agentic
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: qloo-agentic/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run unit tests
+        run: python -m pytest -q
