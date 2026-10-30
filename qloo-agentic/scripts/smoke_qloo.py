@@ -1,6 +1,6 @@
 """Make two small live Qloo requests to verify the event key and API host.
 
-Usage: python scripts/smoke_qloo.py [city]
+Usage: python scripts/smoke_qloo.py [target_kind]
 The API key is read only from QLOO_API_KEY and is never printed.
 """
 from __future__ import annotations
