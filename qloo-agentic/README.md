@@ -21,18 +21,22 @@ Requires Python 3.11+.
 
 ```bash
 cd qloo-agentic
-python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\\Scripts\\Activate.ps1
-pip install -r requirements.txt
-cp .env.example .env            # Windows: Copy-Item .env.example .env
+uv venv --python 3.12
+.venv\\Scripts\\Activate.ps1  # PowerShell
+uv pip install -r requirements.txt
+Copy-Item .env.example .env
+notepad .env
 ```
 
 Set your event key in a local untracked `.env` file (the application loads it on startup) or export it in your shell:
 
 ```bash
-export QLOO_API_KEY="YOUR_EVENT_ISSUED_KEY"
-export QLOO_BASE_URL="https://hackathon.api.qloo.com"
-uvicorn app.main:app --reload --port 8000
+# Edit .env and set your actual event-issued value:
+# QLOO_API_KEY=your-secret-key
+# QLOO_BASE_URL=https://hackathon.api.qloo.com
+
+python scripts/smoke_qloo.py Indore
+uv run uvicorn app.main:app --reload --port 8000
 ```
 
 Open http://127.0.0.1:8000.
