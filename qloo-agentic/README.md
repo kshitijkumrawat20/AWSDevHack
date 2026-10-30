@@ -27,7 +27,7 @@ pip install -r requirements.txt
 cp .env.example .env            # Windows: Copy-Item .env.example .env
 ```
 
-Set your event key in the shell or local untracked `.env` file:
+Set your event key in a local untracked `.env` file (the application loads it on startup) or export it in your shell:
 
 ```bash
 export QLOO_API_KEY="YOUR_EVENT_ISSUED_KEY"
@@ -39,11 +39,21 @@ Open http://127.0.0.1:8000.
 
 ## Deploy
 
-The included Dockerfile serves the UI and API from one process. The `render.yaml` blueprint is included. Connect this repository using branch `qloo-agentic` and root directory `qloo-agentic`, or deploy the directory as a Docker web service.
+The included Dockerfile serves the UI and API from one process. For Render, create a new Web Service from this repository, select branch `qloo-agentic`, set the Root Directory to `qloo-agentic`, choose Docker as the runtime, and set the `QLOO_API_KEY` environment variable as a secret. The same directory can be deployed to any host that runs Docker.
 
 Set these backend environment variables in the host dashboard: `QLOO_API_KEY` (secret), `QLOO_BASE_URL=https://hackathon.api.qloo.com`, and optional `QLOO_TIMEOUT_SECONDS=20`.
 
 Never put the Qloo key in frontend variables, browser storage, source code or screenshots.
+
+## Verify the live event key
+
+The smoke test makes two small live requests (one entity search and one place recommendation). Run it only when you are ready to spend two Qloo API requests:
+
+```bash
+python scripts/smoke_qloo.py Indore
+```
+
+It prints the selected seed and returned place names, never the API key. A configured key alone is not proof of successful authentication; use this check before recording the demo.
 
 ## Tests
 
