@@ -68,7 +68,7 @@ class QlooClient:
         if entity_kind not in QLOO_TYPES:
             raise QlooAPIError("Unsupported Qloo entity category.")
         payload = await self._get("/search", {
-            "query": query.strip(), "types": QLOO_TYPES[entity_kind],
+            "query": query.strip(), "types": [QLOO_TYPES[entity_kind]],
             "take": max(1, min(take, 12)),
         })
         return normalize_entities(payload)
@@ -88,7 +88,7 @@ class QlooClient:
         }
         if target_kind == "place" and city:
             params["filter.location.query"] = city.strip()
-        payload = await self._get("/v2/insights", params)
+        payload = await self._get("/v2/insights/", params)
         return normalize_entities(payload, recommendations=True)
 
 def _candidate_list(payload: dict[str, Any]) -> list[dict[str, Any]]:
