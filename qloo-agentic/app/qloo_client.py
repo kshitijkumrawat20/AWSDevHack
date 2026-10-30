@@ -3,6 +3,9 @@ from __future__ import annotations
 import os
 from typing import Any
 import httpx
+from dotenv import load_dotenv
+
+load_dotenv()
 
 QLOO_TYPES = {
     "movie": "urn:entity:movie", "tv_show": "urn:entity:tv_show",
