@@ -35,7 +35,7 @@ Set your event key in a local untracked `.env` file (the application loads it on
 # QLOO_API_KEY=your-secret-key
 # QLOO_BASE_URL=https://hackathon.api.qloo.com
 
-python scripts/smoke_qloo.py Indore
+python scripts/smoke_qloo.py movie
 uv run uvicorn app.main:app --reload --port 8000
 ```
 
@@ -51,7 +51,7 @@ Never put the Qloo key in frontend variables, browser storage, source code or sc
 
 ## Verify the live event key
 
-The smoke test makes two small live requests (one entity search and one place recommendation). Run it only when you are ready to spend two Qloo API requests:
+The smoke test makes two small live requests (one entity search and one same-category movie recommendation). Run it only when you are ready to spend two Qloo API requests:
 
 ```bash
 python scripts/smoke_qloo.py Indore
